@@ -43,12 +43,12 @@ const Navbar = () => {
                         <span onClick={()=>navigator('/')} className="">
                             <img
                                 className="h-24 p-2  max-sm:hidden  "
-                                src="/Desktop.png"
+                                src="/logo11.png"
                                 alt=""
                             />
                             <img
                                 className="h-16 p-2  sm:hidden   "
-                                src="/Desktop.png"
+                                src="/logo11.png"
                                 alt=""
                             />
                         </span>

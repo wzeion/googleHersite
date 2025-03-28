@@ -6,7 +6,7 @@ const Footer = () => {
 			<div className="container  flex flex-wrap justify-between">
 				<div className="w-full md:w-1/2 lg:w-1/3 px-4 mb-8">
 					<h2 className="text-4xl max-sm:text-2xl font-semibold mb-4 font-serif">Together, let's empower, support, and heal</h2>
-					<p className="text-2xl md:mt-5 font-serif">When She Knows!</p>
+					<p className="text-2xl md:mt-5 font-serif">Her Site !</p>
 				</div>
 
 				<div className='flex max-[410px]:flex-col' >
@@ -33,7 +33,7 @@ const Footer = () => {
 				</div>
 			</div>
 			<div className="text-center mt-8">
-				<p className="text-xs">&copy; 2024 When She Knows. All rights reserved.</p>
+				<p className="text-xs">&copy; 2025 Her Site . All rights reserved.</p>
 			</div>
 		</footer>
 	);
