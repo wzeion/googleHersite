@@ -6,7 +6,10 @@ import { BASE_URL, local } from "../../constents";
 import axios from "axios";
 import { toast } from "react-toastify";
 import {db} from "../../config/firebase-config"
-import { collection,addDoc } from "firebase/firestore";
+import { collection,addDoc, getDoc, getDocs } from "firebase/firestore";
+import './StoriesCard.css';
+import Page2 from "../../components/cards/page2";
+
 
 const StoryPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -16,6 +19,29 @@ const StoryPage = () => {
   const [stories, setStories] = useState([]);
   const [count, setCount] = useState(3);
   const StoryCollectionRef = collection(db, "Stories");
+  const [boxes, setBoxes] = useState([]);
+  const [selectedBox, setSelectedBox] = useState(null);
+  const [images, setImages] = useState([]);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [showCards, setShowCards] = useState(false);
+  const [recStory, setRecStory] = useState([]);
+  
+  const getStories = async () => {
+    try{
+      const data = await getDocs(StoryCollectionRef);
+      const filteredData = data.docs.map((doc)=>({...doc.data(), id: doc.id}));
+      setRecStory(filteredData);
+      console.log(recStory);
+    } catch(err){
+      console.log(err)
+    }
+  }
+
+  useEffect(()=>{
+    getStories();
+  },[] )
+  
+ 
 
   useEffect(() => {
     axios
@@ -39,6 +65,41 @@ const StoryPage = () => {
     }
   }
 
+  
+    const handleImageUpload = (event) => {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setImages((prevImages) => [...prevImages, reader.result]);
+        };
+        reader.readAsDataURL(file);
+      }
+    };
+  
+  const saveImage = (index, event) => {
+    event.preventDefault(); 
+    if (boxes[index]?.image) {
+      toast.success("Image saved successfully!");
+      setBoxes([...boxes]);
+    }
+  };
+  
+  
+
+  // const closeStoryBox = () => {
+  //   setSelectedBox(null);
+  // };
+  
+  const addStory = () => {
+    setBoxes([...boxes, {}]);
+    
+  };
+
+  // const saveImage = () => {
+  //   setStories([...stories, { image: null, text: "", saved: false }])
+  // };
+
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -55,74 +116,36 @@ const StoryPage = () => {
     }
     
   };
+  // const toggleStories = () => {
+  //   setShowCards((prev) => !prev); 
+  // };
+  const addStoryCard = () => {
+    setStories((prevStories) => [
+      ...prevStories,
+      { id: prevStories.length + 1, text: `Story ${prevStories.length + 1}`},
+    ]);
+    closeModal();
+    onShareStory();
+    getStories();
+  };
+
   
 
   return (
     <>
-      {stories.map((prop, index) => {
-        if (index % 2 == 0 && index < count) {
-          return (
-            <div className=" px-auto my-8 ">
-              <div
-                className="  rounded-3xl  md:mx-16 lg:mx-24 mx-8 flex max-lg:flex-col flex-row justify-center items-center p-10"
-                style={{ backgroundColor: "#B2B377" }}
-              >
-                <img
-                  className="ml-5 object-cover h-72 lg:hidden w-96 rounded-3xl "
-                  src={local + prop.image}
-                  alt=""
-                />
-                <div className="font-serif max-lg:mt-10 ">
-                  {prop.description}
-                  <br /> <br />
-                  <b>{prop.name}</b>
-                  <br />
-                  {prop.title}
-                </div>
-                <img
-                  className="ml-5 object-cover h-72 max-lg:hidden w-96 rounded-3xl "
-                  src={local + prop.image}
-                  alt=""
-                />
-              </div>
-            </div>
-          );
-        } else if (index % 2 == 1 && index < count) {
-          return (
-            <div className=" px-auto my-8">
-              <div
-                className=" rounded-3xl  md:mx-16 lg:mx-24 mx-8 flex max-lg:flex-col flex-row justify-center items-center p-10"
-                style={{ backgroundColor: "#B2B377" }}
-              >
-                <img
-                  className="mr-5 object-cover  h-72 w-96 rounded-3xl"
-                  src={local + prop.image}
-                  alt=""
-                />
-                <div className="font-serif max-lg:mt-10">
-                  {prop.description}
-                  <br /> <br />
-                  <b>{prop.name}</b>
-                  <br />
-                  {prop.title}
-                </div>
-              </div>
-            </div>
-          );
-        }
-      })}
+     
+    
+    <div className="storiesContainer" >
 
-      <div
-        className="flex justify-center items-center mt-2"
-        onClick={() => counterIncrease()}
-      >
-        <button className=" flex border border-gray-500 p-3 m-3  rounded-lg ">
-          Load More
-          <span className="pl-2 mt-1">
-            <FaArrowRight />
-          </span>
-        </button>
-      </div>
+      {recStory.map((recStory) => (
+          <div key={recStory.id} className="storiesCards">
+          <img src="\femaleLogo.png" alt="Profile"></img>
+          <h3>{recStory.Title}</h3>
+          <p>{recStory.Description}</p>
+         
+        </div>
+      ))}
+       </div>
 
       <div className="flex flex-col justify-center font-serif items-center mt-3 p-8 lg:h-[500px] bg-[#F2F1EB]">
         <div className="mx-8 text-center">
@@ -147,7 +170,7 @@ const StoryPage = () => {
           onClick={openModal}
           className="flex justify-center items-center  mt-5 lg:mt-12"
         >
-          <button className=" flex border border-gray-500 p-3 m-3 font-serif  rounded-lg ">
+          <button onClick={addStory} className=" flex border border-gray-500 p-3 m-3 font-serif  rounded-lg ">
             Add Stories
           </button>
         </div>
@@ -233,9 +256,11 @@ const StoryPage = () => {
               </div>
 
             </div>
-
+            
             <button
-              onClick={onShareStory}
+              // onClick={() => setShowCards(!showCards)}
+              // onClick={onShareStory}
+              onClick={addStoryCard}
               className="mt-6 block w-full  select-none rounded-lg bg-[#DED0B6] py-3 px-6 text-center align-middle font-sans text-xs font-semibold uppercase text-black shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
               type="button"
             >

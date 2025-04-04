@@ -1,0 +1,47 @@
+.storiesContainer {
+    
+    display: flex;
+    flex-wrap: wrap;  /* Corrected */
+    gap: 30px;  /* Removed incorrect quotes */
+    padding: 30px;
+    justify-content: center;
+    align-items: center;  /* Fixed */
+    background: transparent;
+    max-height: 60vh;
+    max-width: 98%;
+    margin-left: 1%;
+    border-radius: 20px;
+    overflow-y: auto;
+    position: relative;
+}
+.storiesCards {
+    width: 300px;
+    height: 380px;
+    background-color: #b3b3b3;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+    padding: 10px;
+    text-align: center;
+    box-shadow: 0 0 2px black;
+    position: relative;
+    overflow: hidden;
+}
+
+/* ---- Hover Effect ---- */
+.storiesCards:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    background-color: #d2d2d2;
+}
+
+/* ---- Reset on Mouse Leave ---- */
+.storiesCards:not(:hover) {
+    transform: none;
+    box-shadow: 0 0 2px black;
+    background-color: #b3b3b3;
+}

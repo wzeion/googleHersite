@@ -1,142 +1,128 @@
 import { useContext, useEffect, useState } from "react";
 import { MyContext } from "../../App";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteUserData } from "../../features/userSlice";
-
+import { signOut, onAuthStateChanged } from "firebase/auth";
+import { auth } from "../../config/firebase-config";
 
 const Navbar = () => {
     const [scrolling, setScrolling] = useState(false);
-    const {open,setOpen}=useContext(MyContext)
-    const navigator=useNavigate()
+    const { open, setOpen } = useContext(MyContext);
+    const [profileOpen, setProfileOpen] = useState(false);
+    const navigate = useNavigate();
     const dispatch = useDispatch();
+    const [isLogged, setLoginStatus] = useState(true);
     const { user } = useSelector((state) => state.user);
-    console.log('user',user)
-    
+
+    // Listen for auth state changes
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            setLoginStatus(!!user);
+        });
+
+        return () => unsubscribe(); // Cleanup listener on unmount
+    }, []);
+
+    const logout = async () => {
+        try {
+            await signOut(auth);
+            localStorage.removeItem("user"); // 🧹 Clear stored user session
+            dispatch(deleteUserData()); // Reset Redux state
+            navigate("/login");
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
     useEffect(() => {
         const handleScroll = () => {
-            if (window.scrollY > 0) {
-                setScrolling(true);
-            } else {
-                setScrolling(false);
-            }
+            setScrolling(window.scrollY > 0);
         };
-
         window.addEventListener("scroll", handleScroll);
-
-        return () => {
-            window.removeEventListener("scroll", handleScroll);
-        };
+        return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
     return (
-        <>
-            <div
-                className="h-24 flex  md:px-7 px-2 w-full justify-between fixed z-10 items-center"
-                style={{
-                    backgroundColor: scrolling ? "white" : "transparent",
-                    transition: "background-color 0.6s ease-out",
-                }}
-              >
-                <div>
-                    <div className="logo flex align-middle">
-                        <span onClick={()=>navigator('/')} className="">
-                            <img
-                                className="h-24 p-2  max-sm:hidden  "
-                                src="/logo11.png"
-                                alt=""
-                            />
-                            <img
-                                className="h-16 p-2  sm:hidden   "
-                                src="/logo11.png"
-                                alt=""
-                            />
-                        </span>
-                    </div>
-                </div>
+        <div
+            className="h-24 flex md:px-7 px-2 w-full justify-between fixed z-10 items-center"
+            style={{
+                backgroundColor: scrolling ? "white" : "transparent",
+                transition: "background-color 0.6s ease-out",
+            }}
+        >
+            <div className="logo flex align-middle">
+                <button onClick={() => navigate('/')} className="focus:outline-none">
+                    <img className="h-24 p-2 max-sm:hidden" src="/logo11.png" alt="Logo" />
+                    <img className="h-16 p-2 sm:hidden" src="/logo11.png" alt="Logo" />
+                </button>
+            </div>
 
-                <div className="center-portion flex  max-lg:hidden justify-center pe-0">
-                    <span
-                        onClick={()=>navigator('/')}
-                        className="text-black mx-4  font-serif font-bold hover:text-gray-600 cursor-pointer"
+            <div className="center-portion flex justify-center">
+                {[
+                    { name: "Home", path: "/" },
+                    { name: "Identify Abuse", path: "/abuse" },
+                    { name: "Community", path: "/community" },
+                    { name: "Stories", path: "/stories" },
+                    { name: "Help", path: "/help" },
+                    ...(user ? [{ name: "Consult", path: "/consult" }] : []),
+                ].map(({ name, path }, index) => (
+                    <button
+                        key={index}
+                        onClick={() => {
+                            navigate(path);
+                            console.log(auth?.currentUser?.email);
+                        }}
+                        className="text-black mx-4 font-serif font-bold hover:text-gray-600 cursor-pointer focus:outline-none"
                     >
-                        Home
-                    </span>
-                    <span
-                        onClick={()=>navigator('/abuse')}
-                        className="text-black mx-4  font-serif font-bold hover:text-gray-600 cursor-pointer"
-                    >
-                        Identify abuse
-                    </span>
-                    <span
-                        onClick={()=>navigator("/community")}
-                        className="text-black mx-4  font-serif font-bold hover:text-gray-600 cursor-pointer"
-                    >
-                        Community
-                    </span>
-                    <span
-                        onClick={()=>navigator("/stories")}
-                        className="text-black mx-4  font-serif font-bold hover:text-gray-600 cursor-pointer"
-                    >
-                        Stories
-                    </span>
-                    <span
-                        onClick={()=>navigator("/help")}
-                        className="text-black mx-4 font-serif font-bold  hover:text-gray-600 cursor-pointer"
-                    >
-                        Help
-                    </span>
-                        {(user)&&(<span
-                        onClick={()=>navigator("/consult")}
-                        className="text-black mx-4 font-serif font-bold  hover:text-gray-600 cursor-pointer"
-                    >
-                        Consult
-                    </span>)
-                        }
-                    
+                        {name}
+                    </button>
+                ))}
+            </div>
 
-                </div>
-
-        {(!user)?(<div className="right-portion me-6 max-lg:hidden">
-                <div
-                    className="relative inline-block px-4 py-2 font-medium group"
-                >
-                    <span className="absolute inset-0 w-full h-full transition duration-200 ease-out transform translate-x-1 translate-y-1 bg-transparent group-hover:-translate-x-0 group-hover:-translate-y-0"></span>
-                    <span className="absolute rounded-xl  inset-0 w-full h-full bg-transparent border-2 border-black group-hover:bg-black"></span>
-                    <Link to='/login' className="relative p-2  text-black group-hover:text-white">
-                        Login{" "}
-                    </Link>
-                </div>
-            </div>):(<div onClick={()=>{dispatch(deleteUserData())}} className="right-portion me-6 max-lg:hidden">
-                <div
-                    className="relative inline-block px-4 py-2 font-medium group"
-                >
-                    <span className="absolute inset-0 w-full h-full transition duration-200 ease-out transform translate-x-1 translate-y-1 bg-transparent group-hover:-translate-x-0 group-hover:-translate-y-0"></span>
-                    <span className="absolute rounded-xl  inset-0 w-full h-full bg-black border-2 border-black group-hover:bg-black"></span>
-                    <Link to='/login' className="relative p-2  text-white group-hover:text-white">
-                        Logout{" "}
-                    </Link>
-                </div>
-            </div>)}
-                {!open && (
-                    <div
-                        onClick={() => setOpen(true)}
-                        className="center-portion flex lg:hidden justify-center pe-0"
+            <div className="relative">
+                {isLogged ? (
+                    <button
+                        className="profile flex items-center justify-center"
+                        style={{
+                            height: '50px',
+                            width: '50px',
+                            borderRadius: '50%',
+                            background: 'transparent',
+                            boxShadow: '0 0 2px black',
+                        }}
+                        onClick={() => setProfileOpen(!profileOpen)}
                     >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            x="0px"
-                            y="0px"
-                            width="30"
-                            height="50"
-                            viewBox="0 0 24 24"
+                        <img src="/femaleLogo.png" alt="Profile" className="w-full h-full object-cover rounded-full" />
+                    </button>
+                ) : (
+                    <button onClick={() => navigate("/login")}>Login</button>
+                )}
+
+                {profileOpen && (
+                    <div className="absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg p-4">
+                        <button 
+                            onClick={() => navigate('/profile')} 
+                            className="w-full mb-2 bg-blue-500 text-white py-1 rounded hover:bg-blue-600 focus:outline-none"
                         >
-                            <path d="M 2 5 L 2 7 L 22 7 L 22 5 L 2 5 z M 2 11 L 2 13 L 22 13 L 22 11 L 2 11 z M 2 17 L 2 19 L 22 19 L 22 17 L 2 17 z"></path>
-                        </svg>
+                            User Profile
+                        </button>
+                        <button 
+                            onClick={() => navigate('/settings')} 
+                            className="w-full mb-2 bg-gray-500 text-white py-1 rounded hover:bg-gray-600 focus:outline-none"
+                        >
+                            Settings
+                        </button>
+                        <button  
+                            onClick={logout} 
+                            className="w-full bg-red-500 text-white py-1 rounded hover:bg-red-600 focus:outline-none"
+                        >
+                            Logout
+                        </button>
                     </div>
                 )}
             </div>
-        </>
+        </div>
     );
 };
 

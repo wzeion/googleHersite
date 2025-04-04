@@ -3,61 +3,62 @@ import Footer from "../../components/Footer/footer";
 import Navbar from "../../components/navbar/navbar";
 import StoryPage from "../../components/cards/StoryPage";
 import './StoriesBlock.css';
+import Page2 from "../../components/cards/page2";
 
 const StoriesPage = () => {
-  const [stories, setStories] = useState([]);
-  const [selectedStory, setSelectedStory] = useState(null);
+  // const [stories, setStories] = useState([]);
+  // const [selectedStory, setSelectedStory] = useState(null);
 
-  const handleBoxClick = (index) => {
-    setSelectedStory(index);
-  };
+  // const handleBoxClick = (index) => {
+  //   setSelectedStory(index);
+  // };
 
-  const handleImageUpload = (event, index) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const updatedStories = [...stories];
-        updatedStories[index] = {
-          ...updatedStories[index],
-          image: reader.result,
-        };
-        setStories(updatedStories);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+  // const handleImageUpload = (event, index) => {
+  //   const file = event.target.files[0];
+  //   if (file) {
+  //     const reader = new FileReader();
+  //     reader.onloadend = () => {
+  //       const updatedStories = [...stories];
+  //       updatedStories[index] = {
+  //         ...updatedStories[index],
+  //         image: reader.result,
+  //       };
+  //       setStories(updatedStories);
+  //     };
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
 
-  const handleStoryTextChange = (event, index) => {
-    const updatedStories = [...stories];
-    updatedStories[index] = {
-      ...updatedStories[index],
-      text: event.target.value,
-    };
-    setStories(updatedStories);
-  };
+  // const handleStoryTextChange = (event, index) => {
+  //   const updatedStories = [...stories];
+  //   updatedStories[index] = {
+  //     ...updatedStories[index],
+  //     text: event.target.value,
+  //   };
+  //   setStories(updatedStories);
+  // };
 
-  const addNewBox = () => {
-    setStories([...stories, { image: null, text: "", saved: false }]);
-  };
+  // const addNewBox = () => {
+  //   setStories([...stories, { image: null, text: "", saved: false }]);
+  // };
 
-  const closeStory = () => {
-    setSelectedStory(null);
-  };
+  // const closeStory = () => {
+  //   setSelectedStory(null);
+  // };
 
-  const saveStory = () => {
-    const updatedStories = [...stories];
-    updatedStories[selectedStory].saved = true;
-    setStories(updatedStories);
-    closeStory();
-  };
+  // const saveStory = () => {
+  //   const updatedStories = [...stories];
+  //   updatedStories[selectedStory].saved = true;
+  //   setStories(updatedStories);
+  //   closeStory();
+  // };
 
   return (
     <>
       <Navbar />
       <div className="h-24 w-full"></div>
 
-      <div className="StoriesContainer">
+      {/* <div className="StoriesContainer">
         {stories.map((story, index) => (
           <div key={index} className="storiesBox" onClick={() => handleBoxClick(index)}>
             {story.image ? (
@@ -118,8 +119,8 @@ const StoriesPage = () => {
             )}
           </div>
         </div>
-      )}
-
+      )} */}
+       {/* <Page2/> */}
       <StoryPage />
       <Footer />
     </>
