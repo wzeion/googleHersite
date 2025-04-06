@@ -25,6 +25,7 @@ const StoryPage = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [showCards, setShowCards] = useState(false);
   const [recStory, setRecStory] = useState([]);
+  const [selectedStory, setSelectedStory] = useState(null);
   
   const getStories = async () => {
     try{
@@ -136,15 +137,25 @@ const StoryPage = () => {
      
     
     <div className="storiesContainer" >
-
       {recStory.map((recStory) => (
-          <div key={recStory.id} className="storiesCards">
+          <div onClick={() => setSelectedStory(recStory)} key={recStory.id} className="storiesCards">
           <img src="\femaleLogo.png" alt="Profile"></img>
           <h3>{recStory.Title}</h3>
           <p>{recStory.Description}</p>
-         
+          <button>delete card</button>
         </div>
       ))}
+
+      {selectedStory && (
+        <div className="popup">
+          <div className="popup-content">
+            <button onClick={() => setSelectedStory(null)}>X</button>
+            <img src="\femaleLogo.png" alt="Profile" />
+            <h2>{selectedStory.Title}</h2>
+            <p>{selectedStory.Description}</p>
+          </div>
+        </div>
+      )}
        </div>
 
       <div className="flex flex-col justify-center font-serif items-center mt-3 p-8 lg:h-[500px] bg-[#F2F1EB]">
@@ -254,6 +265,10 @@ const StoryPage = () => {
                   rows="4"
                 />
               </div>
+              {/* <div className="imageUpload">
+                <input type="file" accept="image/*" onChange={handleImageUpload} />
+                <button onClick={saveImage}>Save</button>
+              </div> */}
 
             </div>
             
