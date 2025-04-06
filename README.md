@@ -84,6 +84,3 @@ Feel free to fork the repo, raise issues, or open pull requests to help enhance 
 To all the *brave women* out there sharing their stories—*HERSITE* is your platform.  
 We also thank the mentors, tech contributors, and the Google Solution Challenge community for the inspiration and support.
 
----
-
-Let me know if you want a new logo, badges, or a custom architecture diagram next!
