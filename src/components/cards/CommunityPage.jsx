@@ -61,11 +61,6 @@ const StoryPageCard = () => {
             <br />
             Survivar of physical abuse
           </div>
-          <img
-            className="ml-5 object-cover h-72 max-lg:hidden w-96 rounded-3xl "
-            src={local+"image-1710062378298.webp"  }
-            alt=""
-          />
         </div>
       </div>
 
@@ -74,11 +69,6 @@ const StoryPageCard = () => {
           className=" rounded-3xl  md:mx-16 lg:mx-24 mx-8 flex max-lg:flex-col flex-row justify-center items-center p-10"
           style={{ backgroundColor: "#B2B377" }}
         >
-          <img
-            className="mr-5 object-cover  h-72 w-96 rounded-3xl"
-            src={local+"image-1710062498453.jpg"}
-            alt=""
-          />
           <div className="font-serif max-lg:mt-10">
           "I didn't understand what was happening until I started googling my ex's bizarre behaviors and the subject of narcissism kept popping up. I was being gaslit and love bombed but didn't know what that was. I knew that he was playing mind games with me but didn't understand why. This all happened within the first year. Then there [were] the anger rages. That was another confusing behavior. After that I discovered the porn addiction and texting strange women. I was on and off for three years while trying to figure out what was happening and trying to make sense of it all. I was lucky the abuse never turned physical because I believe he was very capable of inflicting great harm. Then the discard begin. I finally ended it first and went 100% no contact because by then I had become educated on the subject."
             <br /> <br />

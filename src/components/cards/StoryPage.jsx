@@ -32,7 +32,12 @@ const StoryPage = () => {
   const deleteStory = async (ID, event) =>{
     const storyDoc = doc(db, "Stories", ID)
     event.stopPropagation(); 
-    await deleteDoc(storyDoc);
+    try{
+      await deleteDoc(storyDoc);
+    } catch (err) {
+      console.error(err);
+    }
+    
     getStories();
   }
 
@@ -98,7 +103,7 @@ const StoryPage = () => {
             <h3>{story.Title}</h3>
             <p>{story.Description}</p>
             <button
-                onClick={(e) => story.UserID === auth.currentUser?.uid && deleteStory(story.id, e)}
+                onClick={(e) =>deleteStory(story.id, e)}
                 disabled={story.UserID !== auth.currentUser?.uid}
                 style={{
                   display: story.UserID === auth.currentUser?.uid ? "solid" : "none",

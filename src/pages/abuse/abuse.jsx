@@ -1,6 +1,6 @@
 import Footer from "../../components/Footer/footer";
 import AbuseBanner from "../../components/abuse/abuseBanner";
-
+import "../../../public/future-faked.jpg"
 import Navbar from "../../components/navbar/navbar";
 
 const Abuse = () => {
@@ -16,7 +16,7 @@ const Abuse = () => {
                     </div>
 
                     <div className="rounded-lg md:w-1/3 w-full" data-aos="fade-left" data-aos-offset="300" data-aos-easing="ease-in-sine">
-                        <img className="rounded-2xl w-full" src="https://mindfuldrawing.files.wordpress.com/2022/10/future-faked.jpg" alt="" />
+                        <img className="rounded-2xl w-full" src="../../../public/future-faked.jpg" alt="" />
 
                     </div>
                 </div>
