@@ -1,12 +1,9 @@
 import { useEffect, useState } from "react";
 import Modal from "react-modal";
-import { FaArrowRight } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
-import { BASE_URL, local } from "../../constents";
-import axios from "axios";
 import { toast } from "react-toastify";
-import {db} from "../../config/firebase-config"
-import { collection,addDoc, getDoc, getDocs } from "firebase/firestore";
+import {db,auth} from "../../config/firebase-config"
+import { collection,addDoc,getDocs,deleteDoc,doc } from "firebase/firestore";
 import './StoriesCard.css';
 import Page2 from "../../components/cards/page2";
 
@@ -17,13 +14,8 @@ const StoryPage = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [stories, setStories] = useState([]);
-  const [count, setCount] = useState(3);
   const StoryCollectionRef = collection(db, "Stories");
   const [boxes, setBoxes] = useState([]);
-  const [selectedBox, setSelectedBox] = useState(null);
-  const [images, setImages] = useState([]);
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [showCards, setShowCards] = useState(false);
   const [recStory, setRecStory] = useState([]);
   const [selectedStory, setSelectedStory] = useState(null);
   
@@ -32,51 +24,21 @@ const StoryPage = () => {
       const data = await getDocs(StoryCollectionRef);
       const filteredData = data.docs.map((doc)=>({...doc.data(), id: doc.id}));
       setRecStory(filteredData);
-      console.log(recStory);
     } catch(err){
       console.log(err)
     }
   }
 
+  const deleteStory = async (ID, event) =>{
+    const storyDoc = doc(db, "Stories", ID)
+    event.stopPropagation(); 
+    await deleteDoc(storyDoc);
+    getStories();
+  }
+
   useEffect(()=>{
     getStories();
   },[] )
-  
- 
-
-  useEffect(() => {
-    axios
-      .get(BASE_URL + "stories")
-      .then((response) => {
-        console.log(response.data.story);
-        setStories(response.data.story);
-      })
-      .catch((error) => toast.error(error));
-  }, []);
-
-  function counterIncrease() {
-    var i = 0;
-    while (i < 3) {
-      if (count <= stories.length) {
-        setCount((count) => count + 1);
-        i = i + 1;
-      } else {
-        break;
-      }
-    }
-  }
-
-  
-    const handleImageUpload = (event) => {
-      const file = event.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          setImages((prevImages) => [...prevImages, reader.result]);
-        };
-        reader.readAsDataURL(file);
-      }
-    };
   
   const saveImage = (index, event) => {
     event.preventDefault(); 
@@ -85,21 +47,11 @@ const StoryPage = () => {
       setBoxes([...boxes]);
     }
   };
-  
-  
 
-  // const closeStoryBox = () => {
-  //   setSelectedBox(null);
-  // };
-  
   const addStory = () => {
     setBoxes([...boxes, {}]);
     
   };
-
-  // const saveImage = () => {
-  //   setStories([...stories, { image: null, text: "", saved: false }])
-  // };
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -111,15 +63,18 @@ const StoryPage = () => {
 
   const onShareStory = async() =>{
     try{
-      await addDoc(StoryCollectionRef,{ Name: name, Title: title, Description: description});
+      await addDoc(StoryCollectionRef,{ 
+        Name: name, 
+        Title: title, 
+        Description: description,
+        UserID: auth?.currentUser?.uid,
+      });
     } catch(err) {
       console.error(err);
     }
     
   };
-  // const toggleStories = () => {
-  //   setShowCards((prev) => !prev); 
-  // };
+
   const addStoryCard = () => {
     setStories((prevStories) => [
       ...prevStories,
@@ -137,13 +92,15 @@ const StoryPage = () => {
      
     
     <div className="storiesContainer" >
-      {recStory.map((recStory) => (
-          <div onClick={() => setSelectedStory(recStory)} key={recStory.id} className="storiesCards">
-          <img src="\femaleLogo.png" alt="Profile"></img>
-          <h3>{recStory.Title}</h3>
-          <p>{recStory.Description}</p>
-          <button>delete card</button>
-        </div>
+      {recStory.map((story) => (
+          <div onClick={() => setSelectedStory(story)} key={story.id} className="storiesCards">
+            <img src="\femaleLogo.png" alt="Profile"></img>
+            <h3>{story.Title}</h3>
+            <p>{story.Description}</p>
+            <button onClick={(e)=> deleteStory(story.id, e)}>Delete Card</button>
+          </div>
+          
+          
       ))}
 
       {selectedStory && (
