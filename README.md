@@ -1,43 +1,86 @@
-# When She Knows
+# 🌐 *HERSITE* – Her Voice. Her Story. Her Power.
 
-## Project Overview
+## 💡 Project Overview
 
-"When She Knows" is a transformative project dedicated to empowering women who are facing psychological abuse. Our platform provides a safe and supportive community where women can connect, share experiences, and find solace amidst the challenges of psychological trauma.
-fully responsive design for the better user interaction
+*HERSITE* is a powerful and empathetic platform built to *support and empower women* who are facing *psychological abuse. It offers a safe space to share experiences, find community support, and access professional guidance. Designed with a **fully responsive UI*, HERSITE ensures meaningful interaction across all devices, creating a digital haven for healing and growth.
 
-[Hosted Live Link ](https://whensheknows.vercel.app/)<br><br>
-[Watch the demo video showcasing all functionalities and features](https://youtu.be/1cL-mstM7_o)
+🔗 *Live Project*: Temporary  
+🎥 *Demo Video*: Temporary
 
-## Features:
+---
 
-- **Community Space:** Join a vibrant community of like-minded individuals, offering support, understanding, and solidarity.
-  
-- **Group Chat:** Engage in real-time conversations with fellow members, fostering connections and providing immediate support.
+## ✨ Features
 
-- **Dynamic Storytelling:** Explore a curated collection of stories showcasing resilience and triumph over psychological abuse.
+- 👭 *Community Space*  
+  A vibrant, supportive environment where users connect through shared stories and experiences.
 
-- **Awareness Page:** Access informative resources and educational materials to deepen understanding about psychological abuse.
+- 💬 *Group Chat*  
+  Real-time discussions to provide emotional comfort and connect with others going through similar challenges.
 
-- **Expert Consultation:** Connect with professionals and utilize an AI-integrated help desk for personalized guidance and support.
+- 📖 *Dynamic Storytelling*  
+  A curated section showcasing powerful stories of survival, hope, and transformation.
 
-- **Beautiful Landing Page:** Experience a visually stunning interface that invites users to embark on a journey of healing and self-discovery.
+- 📚 *Awareness Page*  
+  Informative resources and educational content to spread awareness about psychological abuse and mental health.
 
-## Getting Started
+- 🧠 *Expert Consultation + AI Help Desk*  
+  Access to professionals and AI-driven support to guide users toward solutions and self-help.
 
-To set up the frontend locally, follow these steps:
+- 🌈 *Beautiful Landing Page*  
+  A user-friendly, visually appealing entry point to the platform that reflects care, strength, and unity.
 
-### Prerequisites
+---
 
-- Node.js installed on your machine.
-- Git installed on your machine.
-- An internet connection to fetch dependencies.
+## 🚀 Getting Started
 
-### Installation Steps
+### ✅ Prerequisites
 
-1. Clone the repository to your local machine:
+- Node.js  
+- Git  
+- Stable internet connection
+
+### 📦 Installation Steps
+
+bash
+# 1. Clone the repository
 git clone https://github.com/asifxohd/hackathon-frontend.git
 
-2. cd projec dir
-3. npm install
-4. npm run dev
+# 2. Navigate into the project directory
+cd hackathon-frontend
+
+# 3. Install required dependencies
+npm install
+
+# 4. Run the development server
+npm run dev
+
+
+---
+
+## 🛠 Tech Stack
+
+- *Frontend*: React.js, HTML, CSS, JavaScript  
+- *Backend/Services*: Firebase (authentication, real-time database), AI APIs  
+- *Deployment*: Vercel  
+- *Support Tools*: Chat systems, consultation modules, educational content delivery
+
+---
+
+## 🌍 Why HERSITE?
+
+HERSITE is *different* because it’s *built for women, by a team that deeply cares* about their voices and safety. This platform focuses not just on help, but on *healing and empowerment* through storytelling, awareness, and connection.
+
+---
+
+## 🤝 Contribution
+
+Contributions are welcome!  
+Feel free to fork the repo, raise issues, or open pull requests to help enhance HERSITE.
+
+---
+
+## 🫶 Acknowledgements
+
+To all the *brave women* out there sharing their stories—*HERSITE* is your platform.  
+We also thank the mentors, tech contributors, and the Google Solution Challenge community for the inspiration and support.
 
