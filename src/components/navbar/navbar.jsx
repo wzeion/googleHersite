@@ -100,10 +100,11 @@ const Navbar = () => {
                 )}
 
                 {profileOpen && (
-                    <div className="absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg p-4">
+                    <div className="absolute right-0 mt-2 w-48 border rounded-lg shadow-lg p-4"
+                    style={{ backgroundColor: "#FFF2D9" }}>
                         <button 
                             onClick={() => navigate('/profile')} 
-                            className="w-full mb-2 bg-blue-500 text-white py-1 rounded hover:bg-blue-600 focus:outline-none"
+                            className="w-full mb-2 bg-gray-500 text-white py-1 rounded hover:bg-gray-600 focus:outline-none"
                         >
                             User Profile
                         </button>
@@ -115,7 +116,7 @@ const Navbar = () => {
                         </button>
                         <button  
                             onClick={logout} 
-                            className="w-full bg-red-500 text-white py-1 rounded hover:bg-red-600 focus:outline-none"
+                            className="w-full mb-2 bg-gray-500 text-white py-1 rounded hover:bg-gray-600 focus:outline-none"
                         >
                             Logout
                         </button>

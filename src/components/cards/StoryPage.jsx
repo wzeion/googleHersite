@@ -101,8 +101,8 @@ const StoryPage = () => {
                 onClick={(e) => story.UserID === auth.currentUser?.uid && deleteStory(story.id, e)}
                 disabled={story.UserID !== auth.currentUser?.uid}
                 style={{
-                  backgroundColor: story.UserID === auth.currentUser?.uid ? "red" : "grey",
-                  color: "white",
+                  display: story.UserID === auth.currentUser?.uid ? "solid" : "none",
+                  color: "red",
                   cursor: story.UserID === auth.currentUser?.uid ? "pointer" : "not-allowed",
                   border: "none",
                   padding: "8px 12px",

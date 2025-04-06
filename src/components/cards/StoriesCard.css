@@ -1,5 +1,5 @@
-.storiesContainer {
-    
+.storiesContainer { 
+  font-family: 'Georgia', serif;
     display: flex;
     flex-wrap: wrap;  /* Corrected */
     gap: 30px;  /* Removed incorrect quotes */
@@ -17,7 +17,7 @@
 .storiesCards {
     width: 300px;
     height: 380px;
-    border-radius: 16px;
+    border-radius: 8px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -26,28 +26,26 @@
     transition: transform 0.2s ease, box-shadow 0.3s ease;
     padding: 10px;
     text-align: center;
-    box-shadow: 0 0 2px black;
-    background-color: #919191;
-    position: relative;
     overflow: hidden;
+    box-shadow: 0 0 2px black;
+    background-color: #c6c2b3;
 }
 
 /* ---- Hover Effect ---- */
 .storiesCards:hover {
     transform: translateY(-10px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    background-color: #d2d2d2;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    background-color: #ddddd8;
 }
 
 /* ---- Reset on Mouse Leave ---- */
 .storiesCards:not(:hover) {
     transform: none;
     box-shadow: 0 0 2px black;
-    background-color: #b3b3b3;
+    background-color: #F2F1EB;
 }
 
 .storiesCards img {
-    height: 400px;
     object-fit: cover;
     border-radius: 16px;
 }
