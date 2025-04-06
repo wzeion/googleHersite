@@ -97,11 +97,21 @@ const StoryPage = () => {
             <img src="\femaleLogo.png" alt="Profile"></img>
             <h3>{story.Title}</h3>
             <p>{story.Description}</p>
-            <button onClick={(e)=> deleteStory(story.id, e)}>Delete Card</button>
-          </div>
-          
-          
-      ))}
+            <button
+                onClick={(e) => story.UserID === auth.currentUser?.uid && deleteStory(story.id, e)}
+                disabled={story.UserID !== auth.currentUser?.uid}
+                style={{
+                  backgroundColor: story.UserID === auth.currentUser?.uid ? "red" : "grey",
+                  color: "white",
+                  cursor: story.UserID === auth.currentUser?.uid ? "pointer" : "not-allowed",
+                  border: "none",
+                  padding: "8px 12px",
+                  borderRadius: "5px",
+                  marginTop: "10px"}}
+          >
+            Delete Card
+          </button>
+          </div>))}
 
       {selectedStory && (
         <div className="popup">
