@@ -4,8 +4,8 @@
 
 *HERSITE* is a powerful and empathetic platform built to *support and empower women* who are facing *psychological abuse. It offers a safe space to share experiences, find community support, and access professional guidance. Designed with a **fully responsive UI*, HERSITE ensures meaningful interaction across all devices, creating a digital haven for healing and growth.
 
-🔗 *Live Project*: Temporary  
-🎥 *Demo Video*: Temporary
+🔗 *Live Project*: https://googlehersite.onrender.com/
+🎥 *Demo Video*: https://drive.google.com/file/d/1Y695vP2BAsp7ZQlMkncIGMG77s0J3q1A/view?usp=drivesdk
 
 ---
 
@@ -43,11 +43,10 @@
 
 bash
 # 1. Clone the repository
-git clone https://github.com/asifxohd/hackathon-frontend.git
+git clone https://github.com/wzeion/googleHersite
 
 # 2. Navigate into the project directory
-cd hackathon-frontend
-
+cd googleHersite
 # 3. Install required dependencies
 npm install
 
