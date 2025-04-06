@@ -7,7 +7,12 @@ import { Link } from "react-router-dom";
 import { BASE_URL, local } from "../../constents";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { db} from "../../config/firebase-config";
+import {collection,addDoc} from "firebase/firestore";
 
+
+
+const VolunteerReference = collection(db , "Volunteer");
 const StoryPageCard = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -29,23 +34,12 @@ const StoryPageCard = () => {
   };
 
 
-  const handleVolunteerButtonClick = () => {
-    const data = {
-      name: name,
-      number: phoneNumber,
-      location: location
-    };
-  
-    axios.post(BASE_URL+'add-volunteer', data)
-      .then(response => {
-        console.log('Request successful:', response.data);
-        toast.success('Volunteer added successfully')
-        closeModal()
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        toast.error(error)
-      });
+  const handleVolunteerButtonClick = async () => {
+   try{
+    await addDoc(VolunteerReference, {Name: name, Phone: phoneNumber, Location: location})
+   } catch (err){
+    console.log(err)
+   }
   };
 
   return (
